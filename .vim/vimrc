@@ -1,0 +1,108 @@
+set nocompatible
+filetype off
+syntax on
+
+set fileencodings=utf-8
+set encoding=utf-8
+
+nmap OA <up>
+nmap OB <down>
+nmap OC <right>
+nmap OD <left>
+
+nmap [A <C-up>
+nmap [B <C-down>
+nmap [C <C-right>
+nmap [D <C-left>
+
+nmap [a <C-up>
+nmap [b <C-down>
+nmap [c <C-right>
+nmap [d <C-left>
+
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+Plugin 'VundleVim/Vundle.vim'
+
+Plugin 'scrooloose/nerdcommenter'
+Plugin 'scrooloose/nerdtree'
+
+Plugin 'vim-syntastic/syntastic'
+
+Plugin 'vim-airline/vim-airline'
+Plugin 'powerline/powerline', {'rtp': 'powerline/bindings/vim/'}
+Plugin 'vim-scripts/pydoc.vim'
+Plugin 'plytophogy/vim-virtualenv'
+
+"Plugin 'Valloric/YouCompleteMe'
+
+"Plugin 'yuttie/comfortable-motion.vim'
+
+call vundle#end()
+
+filetype plugin indent on
+
+autocmd BufNewFile,BufRead *.py set ft=python
+
+au BufNewFile,BufRead *.py
+	\ set tabstop=4 |
+	\ set softtabstop=4 |
+	\ set shiftwidth=4 |
+	\ set expandtab |
+	\ set autoindent |
+	\ set fileformat=unix |
+
+set smartindent
+
+let mapleader=','
+
+inoremap ' ''<left>
+inoremap " ""<left>
+inoremap { {}<left>
+inoremap [ []<left>
+inoremap ` ``<left>
+
+syntax enable
+set number
+set hlsearch
+
+nnoremap <silent> <Esc> :nohlsearch<Bar>:echo<CR>
+set showmatch
+"nnoremap <C-V> <C-v>
+
+"Clipboard
+"vmap <C-c> "+y
+"vmap <C-x> "+c
+"nmap <C-v> "+p
+"vmap <C-v> c<Esc>"+p
+"imap <C-v> <C-r><C-o>+
+
+nnoremap <leader>n :NERDTreeFind<CR>
+nnoremap <leader>b :NERDTreeToggle<CR>
+
+let NERDTreeIgnore=['\.pyc$', '\~$']
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+
+let g:NERDTreeFileExtensionHighlightFullName = 1
+let g:NERDTreeExactMatchHighlightFullName = 1
+let g:NERDTreePatternMatchHighlightFullName = 1
+
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 0
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+
+let g:airline_powerline_fonts = 1
+let g:airline_section_b = ''
+let g:airline_section_gutter =''
+let g:airline_section_y = ''
+
+noremap <silent> <C-down> :call comfortable_motion#flick(100)<CR>
+noremap <silent> <C-up> :call comfortable_motion#flick(-100)<CR>
+
+nmap <silent> <C-p> <Plug>(pydocstring)
