@@ -79,7 +79,7 @@ export LANG=fr_FR.UTF-8
 if [[ -n $SSH_CONNECTION ]]; then
   export EDITOR='vim'
 else
-  export EDITOR='mvim'
+  export EDITOR='vim'
 fi
 
 # Compilation flags
@@ -109,5 +109,3 @@ export PATH=$HOME/.local/bin:$PATH
 source tty-solarized-dark.sh
 
 source $ZSH/oh-my-zsh.sh
-
-

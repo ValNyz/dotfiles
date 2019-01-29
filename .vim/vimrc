@@ -5,41 +5,61 @@ syntax on
 set fileencodings=utf-8
 set encoding=utf-8
 
-nmap OA <up>
-nmap OB <down>
-nmap OC <right>
-nmap OD <left>
+map OA <up>
+map OB <down>
+map OC <right>
+map OD <left>
 
-nmap [A <C-up>
-nmap [B <C-down>
-nmap [C <C-right>
-nmap [D <C-left>
+map [A <C-up>
+map [B <C-down>
+map [C <C-right>
+map [D <C-left>
 
-nmap [a <C-up>
-nmap [b <C-down>
-nmap [c <C-right>
-nmap [d <C-left>
+map [a <C-up>
+map [b <C-down>
+map [c <C-right>
+map [d <C-left>
 
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
 Plugin 'VundleVim/Vundle.vim'
 
+" Commenter with <leader>c<space>
 Plugin 'scrooloose/nerdcommenter'
+
+" List file in a new frame buffer <leader>n or <leader>b
 Plugin 'scrooloose/nerdtree'
 
+" syntax checker 
 Plugin 'vim-syntastic/syntastic'
 
+" status bar
 Plugin 'vim-airline/vim-airline'
-Plugin 'powerline/powerline', {'rtp': 'powerline/bindings/vim/'}
+Plugin 'vim-airline/vim-airline-themes'
+" Plugin 'powerline/powerline', {'rtp': '/usr/lib/python3.7/site-packages/powerline/bindings/vim/'}
+
+" See documentation using :Pydoc foo.bar.baz
 Plugin 'vim-scripts/pydoc.vim'
+
+" virtualenv command inside vim
 Plugin 'plytophogy/vim-virtualenv'
 
-"Plugin 'Valloric/YouCompleteMe'
+" autocompletion plugin
+Plugin 'Valloric/YouCompleteMe'
 
-"Plugin 'yuttie/comfortable-motion.vim'
+" Smooth up and down motion
+Plugin 'yuttie/comfortable-motion.vim'
+
+" TestSentenceToShowBehavior
+Plugin 'chaoren/vim-wordmotion'
+
+" Plugin for surroundings of word ("'[{
+Plugin 'machakann/vim-sandwich'
 
 call vundle#end()
+
+let g:airline_theme='base16'
 
 filetype plugin indent on
 
@@ -57,11 +77,11 @@ set smartindent
 
 let mapleader=','
 
-inoremap ' ''<left>
-inoremap " ""<left>
-inoremap { {}<left>
-inoremap [ []<left>
-inoremap ` ``<left>
+"inoremap ' ''<left>
+"inoremap " ""<left>
+"inoremap { {}<left>
+"inoremap [ []<left>
+"inoremap ` ``<left>
 
 syntax enable
 set number
@@ -78,6 +98,7 @@ set showmatch
 "vmap <C-v> c<Esc>"+p
 "imap <C-v> <C-r><C-o>+
 
+" NERDTree
 nnoremap <leader>n :NERDTreeFind<CR>
 nnoremap <leader>b :NERDTreeToggle<CR>
 
@@ -88,21 +109,39 @@ let g:NERDTreeFileExtensionHighlightFullName = 1
 let g:NERDTreeExactMatchHighlightFullName = 1
 let g:NERDTreePatternMatchHighlightFullName = 1
 
+" YCM
+let g:ycm_add_preview_tocompleteopt=1
+let g:ycm_autoclose_preview_window_after_insertion=1
+let g:ycm_max_num_candidates=20
+let g:ycm_max_num_identifier_candidates=8
+let g:ycm_min_num_of_chars_for_completion=2
+
+nnoremap <C-G> :YcmCompleter GoToDefinitionElseDeclaration<CR>
+nnoremap <C-R> :YcmCompleter GoToReferences<CR>
+nnoremap <C-D> :YcmCompleter GetDoc<CR>
+inoremap <C-D> :YcmCompleter GetDoc<CR>
+
+let python_highlight_all=1
+
+" syntastic
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
+
+let g:syntastic_python_checkers=['flake8']
 
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 0
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 
+" Airline status bar
 let g:airline_powerline_fonts = 1
-let g:airline_section_b = ''
-let g:airline_section_gutter =''
+"let g:airline_section_b = ''
+"let g:airline_section_gutter =''
 let g:airline_section_y = ''
 
-noremap <silent> <C-down> :call comfortable_motion#flick(100)<CR>
-noremap <silent> <C-up> :call comfortable_motion#flick(-100)<CR>
+nnoremap <silent> <C-j> :call comfortable_motion#flick(100)<CR>
+nnoremap <silent> <C-k> :call comfortable_motion#flick(-100)<CR>
 
 nmap <silent> <C-p> <Plug>(pydocstring)
